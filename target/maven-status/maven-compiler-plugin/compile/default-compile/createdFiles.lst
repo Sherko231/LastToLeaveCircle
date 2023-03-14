@@ -4,8 +4,9 @@ com\sherko\LastToLeaveCircle\Tasks\WinLoseDetector.class
 com\sherko\LastToLeaveCircle\Commands\AutoShrink\AutoShrinkCommand.class
 com\sherko\LastToLeaveCircle\Listeners\HitListener.class
 com\sherko\LastToLeaveCircle\Commands\BuildSquareCommand.class
-com\sherko\LastToLeaveCircle\Listeners\OnlinePlayersListener.class
 com\sherko\LastToLeaveCircle\Listeners\ShrinkListener.class
+com\sherko\LastToLeaveCircle\SherkoScoreboard.class
 com\sherko\LastToLeaveCircle\Commands\PlayerToolsCommand.class
 com\sherko\LastToLeaveCircle\Commands\ToolsCommand.class
+com\sherko\LastToLeaveCircle\Listeners\ScoreboardUpdater.class
 com\sherko\LastToLeaveCircle\SquareBuilder.class

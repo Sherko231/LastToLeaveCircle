@@ -19,11 +19,9 @@ public class SquareBuilder {
     public static Position getStartPos(){
         return startPos;
     }
-
     public static int getSize(){
         return size;
     }
-
     public static void setSize(int size){
         SquareBuilder.size = size;
     }
