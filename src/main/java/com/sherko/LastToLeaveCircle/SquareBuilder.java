@@ -32,7 +32,7 @@ public class SquareBuilder {
         Player player = Main.INSTANCE.getServer().getPlayer("SYRKING231");
 
         level.addSound(player.getPosition(),
-                Sound.MOB_WITHER_SPAWN);
+                Sound.MOB_WITHER_SPAWN,0.4f,1f);
 
         for (double x = startPos.x; x < startPos.x + size; x++){
             for (double z = startPos.z; z < startPos.z + size; z++){
@@ -87,7 +87,11 @@ public class SquareBuilder {
 
         //--------when shrinking is finished:
         if (size < 2){
-            Main.INSTANCE.getServer().getScheduler().cancelAllTasks();
+            Main.INSTANCE.getServer().getScheduler().scheduleDelayedTask(
+                    Main.INSTANCE,
+                    ()-> Main.INSTANCE.getServer().getScheduler().cancelAllTasks(),
+                    30,true);
+
         }
     }
 

@@ -1,5 +1,6 @@
 package com.sherko.LastToLeaveCircle;
 
+import cn.nukkit.Player;
 import cn.nukkit.plugin.PluginBase;
 import com.sherko.LastToLeaveCircle.Commands.AutoShrink.AutoShrinkCommand;
 import com.sherko.LastToLeaveCircle.Commands.AutoShrink.StopAutoShrinkCommand;

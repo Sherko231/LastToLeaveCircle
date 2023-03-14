@@ -4,6 +4,7 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
+import cn.nukkit.math.Vector3;
 import com.sherko.LastToLeaveCircle.Main;
 import com.sherko.LastToLeaveCircle.SherkoScoreboard;
 
@@ -11,12 +12,15 @@ public class ScoreboardUpdater implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
-        SherkoScoreboard.updateOnlineScorer();
+        e.getPlayer().teleport(new Vector3(0,100,0));
+        SherkoScoreboard.updateOnlinePlayersScorer();
+        SherkoScoreboard.updateRemainingPlayers();
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
-        Main.INSTANCE.getServer().getScheduler().scheduleDelayedTask(Main.INSTANCE, SherkoScoreboard::updateOnlineScorer, 10, true);
+        Main.INSTANCE.getServer().getScheduler().scheduleDelayedTask(Main.INSTANCE, SherkoScoreboard::updateOnlinePlayersScorer, 10, true);
+        Main.INSTANCE.getServer().getScheduler().scheduleDelayedTask(Main.INSTANCE, SherkoScoreboard::updateRemainingPlayers, 10, true);
     }
 
 

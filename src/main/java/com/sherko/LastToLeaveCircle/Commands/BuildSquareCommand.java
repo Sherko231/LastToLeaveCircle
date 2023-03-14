@@ -8,6 +8,7 @@ import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.level.Position;
 import com.sherko.LastToLeaveCircle.Main;
+import com.sherko.LastToLeaveCircle.SherkoScoreboard;
 import com.sherko.LastToLeaveCircle.SquareBuilder;
 
 
@@ -27,6 +28,10 @@ public class BuildSquareCommand extends Command{
     @Override
     public boolean execute(CommandSender sender, String s, String[] args){
         if(!(sender instanceof Player)) return false;
+
+        //--------Resets Remaining Players Count on the Scoreboard:
+        SherkoScoreboard.getRemainingPlayers().clear();
+        SherkoScoreboard.updateRemainingPlayers();
 
         //--------get StartPos from Command:
         double x = Double.parseDouble(args[0]);

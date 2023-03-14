@@ -1,10 +1,12 @@
 package com.sherko.LastToLeaveCircle.Commands.AutoShrink;
 
+import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
 import com.sherko.LastToLeaveCircle.Main;
+import com.sherko.LastToLeaveCircle.SherkoScoreboard;
 import com.sherko.LastToLeaveCircle.SquareBuilder;
 import com.sherko.LastToLeaveCircle.Tasks.WinLoseDetector;
 
@@ -31,7 +33,7 @@ public class AutoShrinkCommand extends Command {
         Main.INSTANCE.getServer().getScheduler().scheduleDelayedRepeatingTask(
                 Main.INSTANCE, SquareBuilder::shrinkSquare,shrinkRate,shrinkRate);
 
-        //start repeating loser detection task:
+        //start repeating loser/playerInSquare detection task:
         Main.INSTANCE.getServer().getScheduler().scheduleDelayedRepeatingTask(
                 Main.INSTANCE,
                 new WinLoseDetector(),

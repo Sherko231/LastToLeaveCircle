@@ -4,6 +4,8 @@ import cn.nukkit.Player;
 import cn.nukkit.level.Sound;
 import cn.nukkit.utils.TextFormat;
 import com.sherko.LastToLeaveCircle.Main;
+import com.sherko.LastToLeaveCircle.SherkoScoreboard;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -23,10 +25,17 @@ public class WinLoseDetector implements Runnable {
                 player.setGamemode(3);
                 player.setGamemode(3,true);
                 player.getLevel().addSound(player.getPosition(), Sound.AMBIENT_WEATHER_THUNDER,1,1,player);
+                SherkoScoreboard.getRemainingPlayers().remove(player);
+                SherkoScoreboard.updateRemainingPlayers();
             }
-
-
+            if(player.getPosition().y >= y && player.getGamemode() == 2){
+                if(SherkoScoreboard.getRemainingPlayers().contains(player)) return;
+                SherkoScoreboard.getRemainingPlayers().add(player);
+                SherkoScoreboard.updateRemainingPlayers();
+            }
         }
+
+
 
 
     }
