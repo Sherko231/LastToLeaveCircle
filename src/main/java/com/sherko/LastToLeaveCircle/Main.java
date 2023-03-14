@@ -23,12 +23,22 @@ import org.w3c.dom.Text;
 public class Main extends PluginBase{
     public static Main INSTANCE;
 
+    //======================================
     private Scoreboard scoreboard;
-
+    private FakeScorer onlineScorer;
+    //======================================
     public Scoreboard getScoreboard(){
         return this.scoreboard;
     }
 
+    public FakeScorer getOnlineScorer(){
+        return this.onlineScorer;
+    }
+
+    public void setOnlineScorer(FakeScorer newScorer){
+        this.onlineScorer = newScorer;
+    }
+    //======================================
     @Override
     public void onLoad(){
         INSTANCE = this;
@@ -39,34 +49,40 @@ public class Main extends PluginBase{
         registerCommands();
         registerListeners();
 
+        int playersOnline = getServer().getOnlinePlayers().size();
+
+        //==========================================
         scoreboard = new Scoreboard(
                 "main",
                 TextFormat.BOLD.toString() + TextFormat.GOLD + "SYRKING " + TextFormat.AQUA + "EVENT",
                 "dummy",
                 SortOrder.ASCENDING);
+        //==========================================
+        FakeScorer lineScorer = new FakeScorer("----------------");
+        FakeScorer lineScorer2 = new FakeScorer("---------------- ");
+        onlineScorer = new FakeScorer(TextFormat.GREEN + "■ Players Online : " + TextFormat.YELLOW + playersOnline);
+        FakeScorer discordScorer = new FakeScorer(TextFormat.LIGHT_PURPLE + "discord.gg/syk");
+
+        //==========================================
+        ScoreboardLine line1 = new ScoreboardLine(scoreboard, lineScorer ,1);
+        ScoreboardLine line2 = new ScoreboardLine(scoreboard, onlineScorer, 2);
+        ScoreboardLine line3 = new ScoreboardLine(scoreboard, lineScorer2 ,3);
+        ScoreboardLine line4 = new ScoreboardLine(scoreboard, discordScorer ,4);
+
+        scoreboard.addLine(line1);
+        scoreboard.addLine(line2);
+        scoreboard.addLine(line3);
+        scoreboard.addLine(line4);
+
+        //==========================================
 
 
-        ScoreboardLine playerOnline = new ScoreboardLine(
-                scoreboard,
-                new FakeScorer(TextFormat.GREEN + "Players Online : " + TextFormat.YELLOW + "0   "),
-                1);
-        ScoreboardLine emptyLine2 = new ScoreboardLine(scoreboard, new FakeScorer(""),2);
-        ScoreboardLine discord = new ScoreboardLine(scoreboard, new FakeScorer(TextFormat.LIGHT_PURPLE + "discord.gg/syk"),3);
 
-
-        scoreboard.addLine(playerOnline);
-        scoreboard.addLine(emptyLine2);
-        scoreboard.addLine(discord);
-
+        //==========================================
         getServer().getScoreboardManager().setDisplay(DisplaySlot.SIDEBAR,scoreboard);
 
 
         saveDefaultConfig();
-    }
-
-    @Override
-    public void onDisable(){
-        getServer().getScoreboardManager().removeScoreboard(scoreboard);
     }
 
     private void registerCommands() {
