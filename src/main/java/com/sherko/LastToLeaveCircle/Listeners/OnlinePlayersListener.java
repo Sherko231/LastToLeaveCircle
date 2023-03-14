@@ -19,7 +19,7 @@ public class OnlinePlayersListener implements Listener {
 
     void updateOnlinePlayers(Scoreboard scoreboard, int amount){
 
-        //TODO: make update online players function
+        //TODO: make update online players function.
 
     }
 
