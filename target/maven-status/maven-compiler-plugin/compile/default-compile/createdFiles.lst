@@ -1,0 +1,10 @@
+com\sherko\LastToLeaveCircle\Main.class
+com\sherko\LastToLeaveCircle\Commands\AutoShrink\StopAutoShrinkCommand.class
+com\sherko\LastToLeaveCircle\Commands\PlayerToolsCommand.class
+com\sherko\LastToLeaveCircle\Tasks\WinLoseDetector.class
+com\sherko\LastToLeaveCircle\Commands\ToolsCommand.class
+com\sherko\LastToLeaveCircle\Commands\AutoShrink\AutoShrinkCommand.class
+com\sherko\LastToLeaveCircle\Listeners\HitListener.class
+com\sherko\LastToLeaveCircle\Commands\BuildSquareCommand.class
+com\sherko\LastToLeaveCircle\Listeners\ShrinkListener.class
+com\sherko\LastToLeaveCircle\SquareBuilder.class
