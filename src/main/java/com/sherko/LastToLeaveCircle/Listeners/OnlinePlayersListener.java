@@ -13,6 +13,14 @@ public class OnlinePlayersListener implements Listener {
         int onlinePlayersCount = Main.INSTANCE.getServer().getOnlinePlayers().values().size();
         Scoreboard scoreboard = Main.INSTANCE.getScoreboard();
 
+        updateOnlinePlayers(scoreboard,onlinePlayersCount);
+
+    }
+
+    void updateOnlinePlayers(Scoreboard scoreboard, int amount){
+
+        //TODO: make update online players function.
+
     }
 
 }
