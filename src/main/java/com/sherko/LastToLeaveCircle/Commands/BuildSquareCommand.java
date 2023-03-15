@@ -33,6 +33,13 @@ public class BuildSquareCommand extends Command{
         SherkoScoreboard.getRemainingPlayers().clear();
         SherkoScoreboard.updateRemainingPlayers();
 
+        //--------Resets "Lost" Tag for all players :
+        for(Player player : Main.INSTANCE.getServer().getOnlinePlayers().values()){
+            if(player.containTag("lost")){
+                player.removeTag("lost");
+            }
+        }
+
         //--------get StartPos from Command:
         double x = Double.parseDouble(args[0]);
         Main.INSTANCE.getConfig().set("CurrentPosX",x);

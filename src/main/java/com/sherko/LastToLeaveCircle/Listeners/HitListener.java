@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
+import cn.nukkit.level.GameRule;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.particle.DustParticle;
 import cn.nukkit.scheduler.TaskHandler;
@@ -16,6 +17,7 @@ public class HitListener implements Listener {
     public void onHit(EntityDamageByEntityEvent e){
 
         if(!(e.getDamager() instanceof Player attacker)) return; //Damager is Player
+        if(!GameRule.PVP.isDeprecated()) return;
 
         attacker = (Player) e.getDamager();
         String itemName = attacker.getInventory().getItemInHand().getName();

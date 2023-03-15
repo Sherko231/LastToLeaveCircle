@@ -8,19 +8,22 @@ import cn.nukkit.math.Vector3;
 
 import com.sherko.LastToLeaveCircle.Main;
 
-public class PlayerTagOrganizer implements Listener {
+public class OnPlayerListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
+
         //tp to spawn-point:
         Player player = e.getPlayer();
         double SpawnX = Double.parseDouble(Main.INSTANCE.getConfig().get("SpawnPosX").toString());
         double SpawnY = Double.parseDouble(Main.INSTANCE.getConfig().get("SpawnPosY").toString());
         double SpawnZ = Double.parseDouble(Main.INSTANCE.getConfig().get("SpawnPosZ").toString());
         player.teleport(new Vector3(SpawnX,SpawnY,SpawnZ));
+        player.setSpawn(new Vector3(SpawnX,SpawnY,SpawnZ));
 
         //give tag:
-        if(!player.isOp() || player.containTag("Player")) {
+        if (player.isOp()) return;
+        if (!player.containTag("Player")) {
             player.addTag("Player");
         }
 
