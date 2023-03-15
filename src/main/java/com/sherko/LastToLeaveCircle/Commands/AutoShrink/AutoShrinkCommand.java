@@ -5,6 +5,7 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
+import cn.nukkit.scheduler.TaskHandler;
 import com.sherko.LastToLeaveCircle.Main;
 import com.sherko.LastToLeaveCircle.SherkoScoreboard;
 import com.sherko.LastToLeaveCircle.SquareBuilder;
@@ -19,6 +20,16 @@ public class AutoShrinkCommand extends Command {
         commandParameters.put("default",new CommandParameter[]{par1});
     }
 
+    private static TaskHandler shrinkTask;
+    private static TaskHandler winLoseTask;
+
+    public static int getShrinkTaskID() {
+        return shrinkTask.getTaskId();
+    }
+    public static int getWinLoseTaskID() {
+        return winLoseTask.getTaskId();
+    }
+
     /** /autoshrink [shrink-rate]
      *
      */
@@ -26,15 +37,17 @@ public class AutoShrinkCommand extends Command {
     public boolean execute(CommandSender sender, String s, String[] args){
         if (SquareBuilder.getSize() <= 2) return false;
 
+
+
         //get shrink rate :
         int shrinkRate = Integer.parseInt(args[0]);
 
         //start repeating shrink task :
-        Main.INSTANCE.getServer().getScheduler().scheduleDelayedRepeatingTask(
+        shrinkTask = Main.INSTANCE.getServer().getScheduler().scheduleDelayedRepeatingTask(
                 Main.INSTANCE, SquareBuilder::shrinkSquare,shrinkRate,shrinkRate);
 
         //start repeating loser/playerInSquare detection task:
-        Main.INSTANCE.getServer().getScheduler().scheduleDelayedRepeatingTask(
+        winLoseTask = Main.INSTANCE.getServer().getScheduler().scheduleDelayedRepeatingTask(
                 Main.INSTANCE,
                 new WinLoseDetector(),
                 10,

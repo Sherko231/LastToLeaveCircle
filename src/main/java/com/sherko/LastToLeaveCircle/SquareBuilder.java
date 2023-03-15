@@ -8,6 +8,7 @@ import cn.nukkit.level.Position;
 import cn.nukkit.level.Sound;
 import cn.nukkit.level.particle.DustParticle;
 import cn.nukkit.math.Vector3;
+import com.sherko.LastToLeaveCircle.Commands.AutoShrink.AutoShrinkCommand;
 
 public class SquareBuilder {
 
@@ -87,11 +88,10 @@ public class SquareBuilder {
 
         //--------when shrinking is finished:
         if (size < 2){
-            Main.INSTANCE.getServer().getScheduler().scheduleDelayedTask(
-                    Main.INSTANCE,
-                    ()-> Main.INSTANCE.getServer().getScheduler().cancelAllTasks(),
-                    30,true);
-
+            Main.INSTANCE.getServer().getScheduler().cancelTask(AutoShrinkCommand.getShrinkTaskID());
+            Main.INSTANCE.getServer().getScheduler().scheduleDelayedTask(Main.INSTANCE,() ->
+                        Main.INSTANCE.getServer().getScheduler().cancelTask(AutoShrinkCommand.getWinLoseTaskID())
+                    ,30,true);
         }
     }
 

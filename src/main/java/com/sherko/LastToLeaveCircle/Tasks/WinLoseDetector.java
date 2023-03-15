@@ -19,7 +19,7 @@ public class WinLoseDetector implements Runnable {
 
         //when player y is lower than arena height , player loses
         for (Player player : playersOnline){
-            if(player.getPosition().y <= y - 3 && player.getGamemode() == 2){
+            if(player.getPosition().y <= y - 3 && player.containTag("Player")){
                 player.sendTitle(TextFormat.BOLD.toString() + TextFormat.RED + "You Lost");
                 player.setSubtitle("you fall off the arena");
                 player.setGamemode(3);
@@ -28,7 +28,7 @@ public class WinLoseDetector implements Runnable {
                 SherkoScoreboard.getRemainingPlayers().remove(player);
                 SherkoScoreboard.updateRemainingPlayers();
             }
-            if(player.getPosition().y >= y && player.getGamemode() == 2){
+            if(player.getPosition().y >= y && player.containTag("Player")){
                 if(SherkoScoreboard.getRemainingPlayers().contains(player)) return;
                 SherkoScoreboard.getRemainingPlayers().add(player);
                 SherkoScoreboard.updateRemainingPlayers();

@@ -12,7 +12,6 @@ public class ScoreboardUpdater implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
-        e.getPlayer().teleport(new Vector3(0,100,0));
         SherkoScoreboard.updateOnlinePlayersScorer();
         SherkoScoreboard.updateRemainingPlayers();
     }

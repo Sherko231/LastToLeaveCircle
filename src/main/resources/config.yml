@@ -3,3 +3,7 @@ CurrentPosX: 0
 CurrentPosY: 0
 CurrentPosZ: 0
 Size: 0
+#Spawn Config:
+SpawnPosX: 0
+SpawnPosY: 100
+SpawnPosZ: 0
