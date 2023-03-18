@@ -8,7 +8,7 @@ import cn.nukkit.utils.TextFormat;
 import com.sherko.LastToLeaveCircle.SquareBuilder;
 
 
-public class ShrinkListener implements Listener {
+public class ShrinkToolListener implements Listener {
 
     @EventHandler
     public void onItemClick(PlayerInteractEvent e) {
@@ -17,7 +17,9 @@ public class ShrinkListener implements Listener {
 
         //if item is ShrinkTool:
         if(e.getPlayer().getInventory().getItemInHand().getName().equalsIgnoreCase(TextFormat.BOLD.toString() + TextFormat.RED + "SHRINK TOOL")){
+
             SquareBuilder.shrinkSquare();
+
         }
 
     }

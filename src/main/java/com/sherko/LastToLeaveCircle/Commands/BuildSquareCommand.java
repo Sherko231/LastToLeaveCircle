@@ -7,6 +7,7 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.level.Position;
+import cn.nukkit.utils.TextFormat;
 import com.sherko.LastToLeaveCircle.Main;
 import com.sherko.LastToLeaveCircle.SherkoScoreboard;
 import com.sherko.LastToLeaveCircle.SquareBuilder;
@@ -27,16 +28,22 @@ public class BuildSquareCommand extends Command{
      */
     @Override
     public boolean execute(CommandSender sender, String s, String[] args){
-        if(!(sender instanceof Player)) return false;
+        if(!(sender instanceof Player player)) return false;
+        if(!player.hasPermission("LastToLeaveCircle.use")) {
+            player.sendMessage(TextFormat.RED + "NO PERMISSION");
+            return false;
+        }
+
+        SquareBuilder.stopAutoShrink();
 
         //--------Resets Remaining Players Count on the Scoreboard:
         SherkoScoreboard.getRemainingPlayers().clear();
         SherkoScoreboard.updateRemainingPlayers();
 
         //--------Resets "Lost" Tag for all players :
-        for(Player player : Main.INSTANCE.getServer().getOnlinePlayers().values()){
-            if(player.containTag("lost")){
-                player.removeTag("lost");
+        for(Player p : Main.INSTANCE.getServer().getOnlinePlayers().values()){
+            if(p.containTag("lost")){
+                p.removeTag("lost");
             }
         }
 

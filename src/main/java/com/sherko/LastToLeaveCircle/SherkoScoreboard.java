@@ -21,23 +21,8 @@ public class SherkoScoreboard {
     private static FakeScorer remainingPlayersScorer;
 
     //============Get-Set============
-    public static Scoreboard getScoreboard(){
-        return scoreboard;
-    }
-    public static FakeScorer getOnlinePlayersScorer(){
-        return onlinePlayersScorer;
-    }
-    public static FakeScorer getRemainingPlayersScorer(){
-        return remainingPlayersScorer;
-    }
     public static List<Player> getRemainingPlayers() {
         return remainingPlayers;
-    }
-    public static void setOnlinePlayersScorer(FakeScorer newScorer){
-        onlinePlayersScorer = newScorer;
-    }
-    public static void setRemainingPlayersScorer(FakeScorer newScorer){
-        remainingPlayersScorer = newScorer;
     }
 
     //============Functions============

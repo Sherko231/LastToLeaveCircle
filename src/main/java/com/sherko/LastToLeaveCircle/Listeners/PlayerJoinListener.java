@@ -8,12 +8,12 @@ import cn.nukkit.math.Vector3;
 
 import com.sherko.LastToLeaveCircle.Main;
 
-public class OnPlayerListener implements Listener {
+public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
 
-        //tp to spawn-point:
+        //tp to permanent spawn-point:
         Player player = e.getPlayer();
         double SpawnX = Double.parseDouble(Main.INSTANCE.getConfig().get("SpawnPosX").toString());
         double SpawnY = Double.parseDouble(Main.INSTANCE.getConfig().get("SpawnPosY").toString());

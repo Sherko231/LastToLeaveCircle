@@ -3,23 +3,22 @@ package com.sherko.LastToLeaveCircle;
 import cn.nukkit.Player;
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.block.BlockConcrete;
+import cn.nukkit.level.GameRule;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.Sound;
 import cn.nukkit.level.particle.DustParticle;
 import cn.nukkit.math.Vector3;
-import com.sherko.LastToLeaveCircle.Commands.AutoShrink.AutoShrinkCommand;
+import cn.nukkit.scheduler.TaskHandler;
 
 public class SquareBuilder {
 
     //============Fields============
-    static Position startPos;
-    static int size;
+    private static int size;
+
+    private static TaskHandler shrinkTask;
 
     //============Get-Set============
-    public static Position getStartPos(){
-        return startPos;
-    }
     public static int getSize(){
         return size;
     }
@@ -30,11 +29,14 @@ public class SquareBuilder {
     //============Functions============
     public static void makeSquare(Position startPos, int size, boolean withParticles){
         Level level = Main.INSTANCE.getServer().getDefaultLevel();
-        Player player = Main.INSTANCE.getServer().getPlayer("SYRKING231");
 
-        level.addSound(player.getPosition(),
-                Sound.MOB_WITHER_SPAWN,0.4f,1f);
+        //SFX:
+        for(Player player : Main.INSTANCE.getServer().getOnlinePlayers().values()){
+            level.addSound(player.getPosition(),
+                    Sound.MOB_WITHER_SPAWN,0.2f,1f,player);
+        }
 
+        //Build the square:
         for (double x = startPos.x; x < startPos.x + size; x++){
             for (double z = startPos.z; z < startPos.z + size; z++){
 
@@ -64,8 +66,8 @@ public class SquareBuilder {
 
     public static void shrinkSquare(){
 
-        //--------get the previous start position from config file
-        startPos = new Position();
+        //--------get the previous start position & size from config file
+        Position startPos = new Position();
         startPos.x = Double.parseDouble(Main.INSTANCE.getConfig().get("CurrentPosX").toString());
         startPos.y = Double.parseDouble(Main.INSTANCE.getConfig().get("CurrentPosY").toString());
         startPos.z = Double.parseDouble(Main.INSTANCE.getConfig().get("CurrentPosZ").toString());
@@ -78,21 +80,45 @@ public class SquareBuilder {
         startPos.z++;
         size -= 2;
 
-        Main.INSTANCE.getConfig().set("CurrentPosX",startPos.x);
-        Main.INSTANCE.getConfig().set("CurrentPosY",startPos.y);
-        Main.INSTANCE.getConfig().set("CurrentPosZ",startPos.z);
+        //--------set the new position & size to config
+        Main.INSTANCE.getConfig().set("CurrentPosX", startPos.x);
+        Main.INSTANCE.getConfig().set("CurrentPosY", startPos.y);
+        Main.INSTANCE.getConfig().set("CurrentPosZ", startPos.z);
         Main.INSTANCE.getConfig().set("Size",size);
         Main.INSTANCE.getConfig().save();
 
+        //--------make the square with new properties
         makeSquare(startPos, size, true);
 
         //--------when shrinking is finished:
         if (size < 2){
-            Main.INSTANCE.getServer().getScheduler().cancelTask(AutoShrinkCommand.getShrinkTaskID());
-            Main.INSTANCE.getServer().getScheduler().scheduleDelayedTask(Main.INSTANCE,() ->
-                        Main.INSTANCE.getServer().getScheduler().cancelTask(AutoShrinkCommand.getWinLoseTaskID())
-                    ,30,true);
+
+            //pvp false:
+            Main.INSTANCE.getServer().getDefaultLevel().getGameRules().setGameRule(GameRule.PVP,false);
+
+            //cancel all tasks :
+            Main.INSTANCE.getServer().getScheduler().cancelTask(shrinkTask.getTaskId());
+
         }
+
+    }
+
+    public static void startAutoShrink(int shrinkRate){
+        //size must be > 2:
+        if (SquareBuilder.getSize() <= 2) return;
+
+        //turn on pvp:
+        Main.INSTANCE.getServer().getDefaultLevel().getGameRules().setGameRule(GameRule.PVP,true);
+
+        //start repeating shrink task :
+        shrinkTask = Main.INSTANCE.getServer().getScheduler().scheduleDelayedRepeatingTask(
+                Main.INSTANCE, SquareBuilder::shrinkSquare, shrinkRate, shrinkRate);
+
+    }
+
+    public static void stopAutoShrink(){
+        Main.INSTANCE.getServer().getScheduler().cancelAllTasks();
+        Main.INSTANCE.getServer().getDefaultLevel().getGameRules().setGameRule(GameRule.PVP,false);
     }
 
     static void deleteSquare(Position startPosition,int size){
@@ -104,4 +130,7 @@ public class SquareBuilder {
             }
         }
     }
+
+
+
 }

@@ -18,6 +18,10 @@ public class ToolsCommand extends Command {
      */
     public boolean execute(CommandSender sender, String s, String[] args){
         if(!(sender instanceof Player player)) return false;
+        if(!player.hasPermission("LastToLeaveCircle.use")) {
+            player.sendMessage(TextFormat.RED + "NO PERMISSION");
+            return false;
+        }
 
         Item shrinkTool = Item.get(ItemID.WOODEN_HOE);
         shrinkTool.setCustomName(TextFormat.BOLD.toString() + TextFormat.RED + "SHRINK TOOL");

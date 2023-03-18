@@ -5,11 +5,10 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
-import cn.nukkit.scheduler.TaskHandler;
+import cn.nukkit.utils.TextFormat;
 import com.sherko.LastToLeaveCircle.Main;
 import com.sherko.LastToLeaveCircle.SherkoScoreboard;
 import com.sherko.LastToLeaveCircle.SquareBuilder;
-import com.sherko.LastToLeaveCircle.Tasks.WinLoseDetector;
 
 public class AutoShrinkCommand extends Command {
 
@@ -20,40 +19,29 @@ public class AutoShrinkCommand extends Command {
         commandParameters.put("default",new CommandParameter[]{par1});
     }
 
-    private static TaskHandler shrinkTask;
-    private static TaskHandler winLoseTask;
-
-    public static int getShrinkTaskID() {
-        return shrinkTask.getTaskId();
-    }
-    public static int getWinLoseTaskID() {
-        return winLoseTask.getTaskId();
-    }
-
     /** /autoshrink [shrink-rate]
      *
      */
     @Override
     public boolean execute(CommandSender sender, String s, String[] args){
-        if (SquareBuilder.getSize() <= 2) return false;
+        if(!(sender instanceof Player player)) return false;
+        if(!player.hasPermission("LastToLeaveCircle.use")) {
+            player.sendMessage(TextFormat.RED + "NO PERMISSION");
+            return false;
+        }
 
-
-
-        //get shrink rate :
+        //Start Shrink :
         int shrinkRate = Integer.parseInt(args[0]);
+        SquareBuilder.startAutoShrink(shrinkRate);
 
-        //start repeating shrink task :
-        shrinkTask = Main.INSTANCE.getServer().getScheduler().scheduleDelayedRepeatingTask(
-                Main.INSTANCE, SquareBuilder::shrinkSquare,shrinkRate,shrinkRate);
-
-        //start repeating loser/playerInSquare detection task:
-        winLoseTask = Main.INSTANCE.getServer().getScheduler().scheduleDelayedRepeatingTask(
-                Main.INSTANCE,
-                new WinLoseDetector(),
-                10,
-                10,
-                true
-        );
+        //Shrink Message :
+        for(Player p : Main.INSTANCE.getServer().getOnlinePlayers().values()){
+            p.sendActionBar(TextFormat.BOLD.toString() + TextFormat.DARK_RED + "The Square is Shrinking !");
+            if(p.containTag("Player")) {
+                SherkoScoreboard.getRemainingPlayers().add(p);
+                SherkoScoreboard.updateRemainingPlayers();
+            }
+        }
 
         return false;
     }
