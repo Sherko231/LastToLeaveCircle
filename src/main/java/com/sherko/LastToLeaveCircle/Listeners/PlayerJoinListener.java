@@ -6,6 +6,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.math.Vector3;
 
+import cn.nukkit.potion.Effect;
 import com.sherko.LastToLeaveCircle.Main;
 
 public class PlayerJoinListener implements Listener {
@@ -26,6 +27,9 @@ public class PlayerJoinListener implements Listener {
         if (!player.containTag("Player")) {
             player.addTag("Player");
         }
+
+        //give effects :
+        player.addEffect(Effect.getEffect(Effect.SATURATION).setAmplifier(255).setDuration(9999999).setVisible(false));
 
 
     }

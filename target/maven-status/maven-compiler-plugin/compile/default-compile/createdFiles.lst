@@ -7,6 +7,7 @@ com\sherko\LastToLeaveCircle\Listeners\ShrinkToolListener.class
 com\sherko\LastToLeaveCircle\SherkoScoreboard.class
 com\sherko\LastToLeaveCircle\Commands\SetSpawnPointCommand.class
 com\sherko\LastToLeaveCircle\Listeners\PlayerJoinListener.class
+com\sherko\LastToLeaveCircle\Commands\KockbackToolCommand.class
 com\sherko\LastToLeaveCircle\Commands\ToolsCommand.class
 com\sherko\LastToLeaveCircle\Listeners\ScoreboardUpdater.class
 com\sherko\LastToLeaveCircle\SquareBuilder.class

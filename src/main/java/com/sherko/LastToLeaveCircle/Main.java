@@ -1,9 +1,11 @@
 package com.sherko.LastToLeaveCircle;
 
+import cn.nukkit.level.GameRule;
 import cn.nukkit.plugin.PluginBase;
 import com.sherko.LastToLeaveCircle.Commands.AutoShrink.AutoShrinkCommand;
 import com.sherko.LastToLeaveCircle.Commands.AutoShrink.StopAutoShrinkCommand;
 import com.sherko.LastToLeaveCircle.Commands.BuildSquareCommand;
+import com.sherko.LastToLeaveCircle.Commands.KockbackToolCommand;
 import com.sherko.LastToLeaveCircle.Commands.SetSpawnPointCommand;
 import com.sherko.LastToLeaveCircle.Commands.ToolsCommand;
 import com.sherko.LastToLeaveCircle.Listeners.PlayerJoinListener;
@@ -26,6 +28,7 @@ public class Main extends PluginBase{
         registerListeners();
 
         SherkoScoreboard.makeScoreboard();
+        getServer().getDefaultLevel().getGameRules().setGameRule(GameRule.DO_IMMEDIATE_RESPAWN,true);
 
         saveDefaultConfig();
     }
@@ -37,6 +40,7 @@ public class Main extends PluginBase{
         getServer().getCommandMap().register("autoshrink", new AutoShrinkCommand());
         getServer().getCommandMap().register("stopautoshrink", new StopAutoShrinkCommand());
         getServer().getCommandMap().register("spawnpointall",new SetSpawnPointCommand());
+        getServer().getCommandMap().register("giveplayertools",new KockbackToolCommand());
     }
 
     private void registerListeners() {

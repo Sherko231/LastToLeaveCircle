@@ -34,7 +34,7 @@ public class AutoShrinkCommand extends Command {
         int shrinkRate = Integer.parseInt(args[0]);
         SquareBuilder.startAutoShrink(shrinkRate);
 
-        //Shrink Message :
+        //Shrink Message - Update Scoreboard :
         for(Player p : Main.INSTANCE.getServer().getOnlinePlayers().values()){
             p.sendActionBar(TextFormat.BOLD.toString() + TextFormat.DARK_RED + "The Square is Shrinking !");
             if(p.containTag("Player")) {
